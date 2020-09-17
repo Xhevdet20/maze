@@ -8,8 +8,8 @@ const {
   Events
 } = Matter;
 
-const cellsHorizontal =18;
-const cellsVertical =15;
+const cellsHorizontal =20;
+const cellsVertical =16;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -23,7 +23,7 @@ const unitLengthY = height /cellsVertical;
    element: document.body,
    engine: engine,
    options: {
-     wireframes: true,
+     wireframes: false,
      width,
      height
    }
@@ -142,7 +142,10 @@ horizontals.forEach((row, rowIndex) => {
       4,
       {
         label : 'wall',
-        isStatic: true
+        isStatic: true,
+        render: {
+          fillStyle: 'red'
+        }
       }
     );
       World.add(world, wall);
@@ -162,7 +165,10 @@ verticals.forEach((row, rowIndex) => {
       unitLengthY,
       {
         label : 'wall',
-        isStatic: true
+        isStatic: true,
+        render: {
+          fillStyle: 'red'
+        }
       }
       );
       World.add(world, wall);
@@ -177,7 +183,10 @@ verticals.forEach((row, rowIndex) => {
     unitLengthY *.7,
     {
       isStatic: true,
-      label : 'goal'
+      label : 'goal',
+      render: {
+        fillStyle: 'green'
+      }
     }
   );
 
@@ -225,6 +234,7 @@ verticals.forEach((row, rowIndex) => {
         labels.includes(collision.bodyA.label) && 
         labels.includes(collision.bodyB.label)
       ) {
+        document.querySelector('.winner').classList.remove('hidden');
         world.gravity.y = 1;
         world.bodies.forEach(body => {
           if(body.label === 'wall'){
